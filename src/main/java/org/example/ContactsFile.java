@@ -79,6 +79,8 @@ public class ContactsFile {
             e.printStackTrace();
             return;
         }
+//        System.out.println(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
         if(lines.contains(input)){
             lines.remove(input);
             try {
@@ -92,7 +94,7 @@ public class ContactsFile {
         }
     }
 
-    public void searchContact(){
+//    public void searchContact(){
 
     }
 
