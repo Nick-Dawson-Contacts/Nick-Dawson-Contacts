@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import org.example.Input;
-
 public class ContactsFile {
     private Path file;
     public List<String> contacts;
@@ -37,8 +35,9 @@ public class ContactsFile {
             e.printStackTrace();
             return;
         }
-        System.out.println("Name   |   Phone Number");
         System.out.println("=======================");
+        System.out.println("Name   |   Phone Number");
+        System.out.println("-----------------------");
         for (String line : lines){
             String[] displayContacts = line.split(",");
             String name = displayContacts[0];
