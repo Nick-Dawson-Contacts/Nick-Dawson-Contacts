@@ -45,6 +45,7 @@ public class ContactsFile {
             String number = displayContacts[1];
             System.out.println(name + "  |  " + number);
         }
+        System.out.println("=======================");
     }
 
     public void addContact() {
