@@ -29,15 +29,21 @@ public class ContactsFile {
         }
     }
 
-    public void printContacts() {
-        try {
-            List<String> contactsFromFile = Files.readAllLines(this.file);
-            System.out.println(contactsFromFile);
-            for (int i = 1; i <= contactsFromFile.size(); i += 1) {
-                System.out.println(i + ": " + contactsFromFile.get(i - 1));
-            }
-        } catch (IOException e) {
+    public void printContacts(){
+        List<String> lines;
+        try{
+            lines = Files.readAllLines(this.file);
+        } catch(IOException e){
             e.printStackTrace();
+            return;
+        }
+        System.out.println("Name   |   Phone Number");
+        System.out.println("=======================");
+        for (String line : lines){
+            String[] displayContacts = line.split(",");
+            String name = displayContacts[0];
+            String number = displayContacts[1];
+            System.out.println(name + "  |  " + number);
         }
     }
 
@@ -80,19 +86,28 @@ public class ContactsFile {
             e.printStackTrace();
             return;
         }
-//        System.out.println(lines.size());
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.contains(input)) {
-                lines.remove(input);
-                try {
-                    Files.write(this.file, lines);
-                    System.out.println("Contact deleted successfully");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                System.out.println("Contact not found");
+        boolean found = false;
+        List<String> linesToRemove = new ArrayList<>();
+        for (String line : lines) {
+            String[] contactInfo = line.split(",");
+            String name = contactInfo[0];
+            String number = contactInfo[1];
+            if (name.equals(input) || number.equals(input)) {
+                linesToRemove.add(line);
+                found = true;
             }
+        }
+        if (found) {
+            lines.removeAll(linesToRemove);
+            try {
+                Files.write(this.file, lines);
+                System.out.println("Contact deleted successfully");
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println(e + "this one 2");
+            }
+        } else {
+            System.out.println("Contact not found: " + input);
         }
     }
 
@@ -107,15 +122,20 @@ public class ContactsFile {
             e.printStackTrace();
             return;
         }
+        boolean found = false;
         for (String line : lines) {
             String[] contactInfo = line.split(",");
             String name = contactInfo[0];
+            String number = contactInfo[1];
             if (name.equalsIgnoreCase(input)) {
                 System.out.println("Contact information for " + name + ":");
-                System.out.println("Name: " + contactInfo[0]);
-                System.out.println("Number: " + contactInfo[1]);
-                return;
+                System.out.println("Name: " + name);
+                System.out.println("Number: " + number);
+                found = true;
+                break;
             }
+        }
+        if (!found) {
             System.out.println("Contact not found: " + input);
         }
     }
