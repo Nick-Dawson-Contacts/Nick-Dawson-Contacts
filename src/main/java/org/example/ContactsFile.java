@@ -28,17 +28,18 @@ public class ContactsFile {
     }
 
     public void printContacts(){
-        List<String> lines;
-        try{
-            lines = Files.readAllLines(this.file);
-        } catch(IOException e){
-            e.printStackTrace();
-            return;
-        }
+//        List<String> lines;
+//        try{
+//            lines = Files.readAllLines(this.file);
+//        } catch(IOException e){
+//            e.printStackTrace();
+//            return;
+//        }
+        updateContacts();
         System.out.println("=======================");
         System.out.println("Name   |   Phone Number");
         System.out.println("-----------------------");
-        for (String line : lines){
+        for (String line : this.contacts){
             String[] displayContacts = line.split(",");
             String name = displayContacts[0];
             String number = displayContacts[1];
@@ -51,19 +52,13 @@ public class ContactsFile {
         Scanner scanner = new Scanner(System.in);
         System.out.println("What is the name,number of the person you're adding?");
         String input = scanner.nextLine();
-        List<String> lines;
-        try {
-            lines = Files.readAllLines(this.file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        if (!lines.contains(input)) {
-            lines.add(input);
+        updateContacts();
+        if (!this.contacts.contains(input)) {
+            contacts.add(input);
             try {
                 Files.write(
                         this.file,
-                        lines,
+                        this.contacts,
                         StandardOpenOption.WRITE
                 );
             } catch (IOException e) {
@@ -79,16 +74,10 @@ public class ContactsFile {
         Scanner scanner = new Scanner(System.in);
         System.out.println("What contact would you like to delete?");
         String input = scanner.nextLine();
-        List<String> lines;
-        try {
-            lines = Files.readAllLines(this.file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        updateContacts();
         boolean found = false;
         List<String> linesToRemove = new ArrayList<>();
-        for (String line : lines) {
+        for (String line : this.contacts) {
             String[] contactInfo = line.split(",");
             String name = contactInfo[0];
             String number = contactInfo[1];
@@ -98,9 +87,9 @@ public class ContactsFile {
             }
         }
         if (found) {
-            lines.removeAll(linesToRemove);
+            contacts.removeAll(linesToRemove);
             try {
-                Files.write(this.file, lines);
+                Files.write(this.file, this.contacts);
                 System.out.println("Contact deleted successfully");
             } catch (IOException e) {
                 e.printStackTrace();
@@ -115,15 +104,9 @@ public class ContactsFile {
         Scanner scanner = new Scanner(System.in);
         System.out.println("What contact would you like to see?");
         String input = scanner.nextLine();
-        List<String> lines;
-        try {
-            lines = Files.readAllLines(this.file);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
+        updateContacts();
         boolean found = false;
-        for (String line : lines) {
+        for (String line : this.contacts) {
             String[] contactInfo = line.split(",");
             String name = contactInfo[0];
             String number = contactInfo[1];
