@@ -13,6 +13,7 @@ public class ContactsFile {
     private Path file;
     public List<String> contacts;
 
+
     public ContactsFile() {
         this.file = Paths.get("data", "contacts.csv");
         this.updateContacts();
@@ -28,17 +29,10 @@ public class ContactsFile {
     }
 
     public void printContacts(){
-//        List<String> lines;
-//        try{
-//            lines = Files.readAllLines(this.file);
-//        } catch(IOException e){
-//            e.printStackTrace();
-//            return;
-//        }
         updateContacts();
         System.out.println("=======================");
         System.out.println("Name   |   Phone Number");
-        System.out.println("-----------------------");
+        System.out.println(".......................");
         for (String line : this.contacts){
             String[] displayContacts = line.split(",");
             String name = displayContacts[0];
@@ -93,7 +87,6 @@ public class ContactsFile {
                 System.out.println("Contact deleted successfully");
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println(e + "this one 2");
             }
         } else {
             System.out.println("Contact not found: " + input);
